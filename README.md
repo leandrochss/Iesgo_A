@@ -1,2 +1,2 @@
-# Iesgo_A
-IESGO Python 
+# IESGO-Python
+Leandro Chaves
