@@ -1,0 +1,151 @@
+using System;
+using System.Collections.Generic;
+
+// Interface que define o método GetDrawing para retornar o desenho ASCII
+public interface IDrawing
+{
+    string GetDrawing();
+}
+
+// Classes para cada desenho ASCII
+public class Dog : IDrawing
+{
+    public string GetDrawing()
+    {
+        return @"
+  / \__
+ (    @\___
+ /         O
+/   (_____/
+/_____/   U";
+    }
+}
+
+public class Cat : IDrawing
+{
+    public string GetDrawing()
+    {
+        return @"
+ /\_/\  
+( o.o ) 
+ > ^ < ";
+    }
+}
+
+public class Fish : IDrawing
+{
+    public string GetDrawing()
+    {
+        return @"
+     ><(((('>";
+    }
+}
+
+public class Bird : IDrawing
+{
+    public string GetDrawing()
+    {
+        return @"
+  \\
+   (o>
+\\_//)
+ \_/_)
+  _|_ ";
+    }
+}
+
+// Classe personalizada para armazenar novos desenhos adicionados pelo usuário
+public class CustomDrawing : IDrawing
+{
+    private readonly string _drawing;
+
+    public CustomDrawing(string drawing)
+    {
+        _drawing = drawing;
+    }
+
+    public string GetDrawing()
+    {
+        return _drawing;
+    }
+}
+
+public class Program
+{
+    private static List<IDrawing> drawings = new List<IDrawing> 
+    {
+        new Dog(),
+        new Cat(),
+        new Fish(),
+        new Bird()
+    };
+
+    public static void Main(string[] args)
+    {
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("Menu de Desenhos ASCII:");
+            Console.WriteLine("1. Ver todos os desenhos");
+            Console.WriteLine("2. Adicionar novo desenho");
+            Console.WriteLine("3. Remover um desenho");
+            Console.WriteLine("4. Sair");
+            Console.Write("Escolha uma opção: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    ViewDrawings();
+                    break;
+                case "2":
+                    AddDrawing();
+                    break;
+                case "3":
+                    RemoveDrawing();
+                    break;
+                case "4":
+                    return;
+                default:
+                    Console.WriteLine("Opção inválida.");
+                    break;
+            }
+
+            Console.WriteLine("Pressione qualquer tecla para voltar ao menu...");
+            Console.ReadKey();
+        }
+    }
+
+    private static void ViewDrawings()
+    {
+        Console.Clear();
+        for (int i = 0; i < drawings.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {drawings[i].GetDrawing()}\n");
+        }
+    }
+
+    private static void AddDrawing()
+    {
+        Console.Clear();
+        Console.WriteLine("Digite o desenho ASCII que deseja adicionar (Use '\\n' para nova linha):");
+        string newDrawing = Console.ReadLine().Replace("\\n", "\n");
+        drawings.Add(new CustomDrawing(newDrawing));
+        Console.WriteLine("Desenho adicionado com sucesso!");
+    }
+
+    private static void RemoveDrawing()
+    {
+        Console.Clear();
+        Console.Write("Digite o número do desenho que deseja remover: ");
+        if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= drawings.Count)
+        {
+            drawings.RemoveAt(index - 1);
+            Console.WriteLine("Desenho removido com sucesso!");
+        }
+        else
+        {
+            Console.WriteLine("Número inválido.");
+        }
+    }
+}
