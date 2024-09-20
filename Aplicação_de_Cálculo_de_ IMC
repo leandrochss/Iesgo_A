@@ -1,0 +1,62 @@
+using System;
+using System.Windows.Forms;
+
+namespace IMCCalculadora
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void btnCalcular_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Coleta dos dados inseridos pelo usuário
+                float peso = float.Parse(txtPeso.Text);
+                float altura = float.Parse(txtAltura.Text);
+
+                // Cálculo do IMC
+                float imc = peso / (altura * altura);
+
+                // Condicional para exibir a mensagem correta
+                if (imc < 18.5)
+                {
+                    lblResultado.Text = $"Seu IMC: {imc:F2}\nVocê está abaixo do peso. ⚠️";
+                }
+                else if (imc >= 18.5 && imc <= 24.9)
+                {
+                    lblResultado.Text = $"Seu IMC: {imc:F2}\nVocê está com o peso normal. 🎯";
+                }
+                else if (imc >= 25 && imc <= 29.9)
+                {
+                    lblResultado.Text = $"Seu IMC: {imc:F2}\nVocê está com sobrepeso. 🔔";
+                }
+                else
+                {
+                    lblResultado.Text = $"Seu IMC: {imc:F2}\nVocê está com obesidade. 🚨";
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Por favor, insira valores válidos!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Limpar campos de entrada
+        private void btnLimpar_Click(object sender, EventArgs e)
+        {
+            txtPeso.Text = "";
+            txtAltura.Text = "";
+            lblResultado.Text = "";
+        }
+
+        // Fechar a aplicação
+        private void btnSair_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+    }
+}
