@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+
+// Classe base Veiculo
+public abstract class Veiculo
+{
+    // Propriedades
+    public string Marca { get; set; }
+    public string Modelo { get; set; }
+    public double VelocidadeMaxima { get; set; }
+
+    // Construtor
+    public Veiculo(string marca, string modelo, double velocidadeMaxima)
+    {
+        Marca = marca;
+        Modelo = modelo;
+        VelocidadeMaxima = velocidadeMaxima;
+    }
+
+    // Método abstrato para cálculo de consumo
+    public abstract double CalcularConsumo();
+
+    // Método virtual para exibir as informações
+    public virtual void ExibirInformacoes()
+    {
+        Console.WriteLine($"Marca: {Marca}, Modelo: {Modelo}, Velocidade Máxima: {VelocidadeMaxima} km/h, Consumo: {CalcularConsumo()} km/l");
+    }
+}
+
+// Classe Carro
+public class Carro : Veiculo
+{
+    public Carro(string marca, string modelo, double velocidadeMaxima) 
+        : base(marca, modelo, velocidadeMaxima) { }
+
+    public override double CalcularConsumo() => 12.0; // Consumo de 12 km/l
+
+    public override void ExibirInformacoes()
+    {
+        Console.WriteLine("Carro:");
+        base.ExibirInformacoes();
+    }
+}
+
+// Classe Moto
+public class Moto : Veiculo
+{
+    public Moto(string marca, string modelo, double velocidadeMaxima)
+        : base(marca, modelo, velocidadeMaxima) { }
+
+    public override double CalcularConsumo() => 40.0; // Consumo de 40 km/l
+
+    public override void ExibirInformacoes()
+    {
+        Console.WriteLine("Moto:");
+        base.ExibirInformacoes();
+    }
+}
+
+// Classe Caminhao
+public class Caminhao : Veiculo
+{
+    public Caminhao(string marca, string modelo, double velocidadeMaxima)
+        : base(marca, modelo, velocidadeMaxima) { }
+
+    public override double CalcularConsumo() => 8.0; // Consumo de 8 km/l
+
+    public override void ExibirInformacoes()
+    {
+        Console.WriteLine("Caminhão:");
+        base.ExibirInformacoes();
+    }
+}
+
+// Método Main para testar o código
+class Program
+{
+    static void Main(string[] args)
+    {
+        var veiculos = new List<Veiculo>
+        {
+            new Carro("Toyota", "Corolla", 180),
+            new Moto("Honda", "CBR", 220),
+            new Caminhao("Volvo", "FH", 120)
+        };
+
+        // Exibir informações de cada veículo
+        foreach (var veiculo in veiculos)
+        {
+            veiculo.ExibirInformacoes();
+            Console.WriteLine();
+        }
+    }
+}
